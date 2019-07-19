@@ -1,1 +1,12 @@
+# Mac
+.DS_Store
+
+# IDE
 .idea/
+
+!public/
+public/*
+!public/.gitkeep
+
+docker/
+.dockerignore
