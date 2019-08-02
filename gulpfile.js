@@ -4,11 +4,8 @@ const gulp = require('gulp'),
     gutil = require('gulp-util'),
     clean = require('gulp-clean'),
     merge = require('merge-stream'),
-    concat = require('gulp-concat'),
     notify = require('gulp-notify'),
-    rename = require("gulp-rename"),
     uglify = require('gulp-uglify'),
-    connect = require('gulp-connect'),
     ghPages = require('gulp-gh-pages-will'),
     imagemin = require('gulp-imagemin'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -23,19 +20,15 @@ const gulp = require('gulp'),
 gulp.task('server', function() {
     browserSync.init({
         server: {
-            baseDir: "./"
+            baseDir: "./assets"
         },
         port: "7777"
     });
 
-    gulp.watch(['./**/*.html']).on('change', browserSync.reload);
+    gulp.watch(['./pages/**/*.html', './templates/**/*.html']).on('change', browserSync.reload);
     gulp.watch('./js/**/*.js').on('change', browserSync.reload);
 
-
-    gulp.watch([
-        './templates/**/*.html',
-        './pages/**/*.html'
-    ], ['fileinclude']);
+    gulp.watch(['./templates/**/*.html', './pages/**/*.html'], ['fileinclude']);
     gulp.watch('./sass/**/*', ['sass']);
 });
 
@@ -49,7 +42,7 @@ gulp.task('sass', function() {
         )
         .on('error', notify.onError())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./css/'))
+        .pipe(gulp.dest('./assets/css/'))
         .pipe(browserSync.stream());
 });
 
@@ -59,15 +52,16 @@ gulp.task('fileinclude', function() {
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
-        }).on('error', gutil.log))
+        })
+        .on('error', gutil.log))
         .on('error', notify.onError())
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./assets/'))
 });
 
 // зтиснення svg, png, jpeg
 gulp.task('minify:img', function() {
     // беремо всі картинки крім папки де лежать картинки для спрайту
-    return gulp.src(['./images/**/*', '!./images/sprite/*'])
+    return gulp.src(['./assets/images/**/*'])
         .pipe(imagemin().on('error', gutil.log))
         .pipe(gulp.dest('./public/images/'));
 });
@@ -85,7 +79,7 @@ gulp.task('minify:css', function() {
 
 // зтиснення js
 gulp.task('minify:js', function() {
-    gulp.src('./js/**/index.js')
+    gulp.src('./assets/js/**/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('./public/js/'));
 });
@@ -97,14 +91,14 @@ gulp.task('minify:html', function() {
         spare: true
     };
 
-    return gulp.src(['./*.html'])
+    return gulp.src(['./assets/**/*.html'])
         .pipe(minifyHTML(opts))
         .pipe(gulp.dest('./public/'));
 });
 
 // видалити папку public
 gulp.task('clean', function() {
-    return gulp.src('./public', { read: false }).pipe(clean());
+    return gulp.src(['./public', './assets'], { read: false }).pipe(clean());
 });
 
 // створення спрайту з картинок з папки images/sprite
@@ -121,15 +115,15 @@ gulp.task('sprite', function() {
         })
     );
 
-    var imgStream = spriteData.img.pipe(gulp.dest('images/'));
-    var cssStream = spriteData.css.pipe(gulp.dest('sass/'));
+    var imgStream = spriteData.img.pipe(gulp.dest('./assets/images/'));
+    var cssStream = spriteData.css.pipe(gulp.dest('./sass/'));
 
     return merge(imgStream, cssStream);
 });
 
 // публікація на gh-pages
 gulp.task('deploy', function() {
-    return gulp.src('./public/**/*').pipe(ghPages());
+    return gulp.src(['./public/**/*']).pipe(ghPages());
 });
 
 // при виклику в терміналі команди gulp, буде запущені задачі 
@@ -137,9 +131,10 @@ gulp.task('deploy', function() {
 // sass - для компіляції sass в css, тому що браузер 
 // не розуміє попередній синтаксис,
 // fileinclude - для того щоб з маленьких шаблонів зібрати повну сторінку
-gulp.task('default', ['server', 'sass', 'fileinclude']);
+gulp.task('default', ['server', 'build']);
+gulp.task('build', ['sprite', 'sass', 'fileinclude']);
 
 // при виклику команди gulp production
 // будуть стиснуті всі ресурси в папку public
 // після чого командою gulp deploy їх можна опублікувати на github
-gulp.task('production', ['minify:html', 'minify:css', 'minify:js', 'minify:img']);
+gulp.task('production', ['build', 'minify:html', 'minify:css', 'minify:js', 'minify:img']);
