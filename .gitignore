@@ -4,9 +4,15 @@
 # IDE
 .idea/
 
-!public/
-public/*
-!public/.gitkeep
+public/
 
 docker/
 .dockerignore
+
+assets/
+publish/
+.publish/
+
+node_modules/
+
+sass/_icon-mixin.scss
