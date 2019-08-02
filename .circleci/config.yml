@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: circleci/node:10.16
+    working_directory: ~/repo
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "68:78:30:5c:75:7d:bc:b7:0c:c9:1a:c1:a0:e1:33:55"
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: git status
+      - run: git config --global user.email "haos616@gmail.com"
+      - run: git config --global user.name "Github pages"
+      - run: node_modules/.bin/gulp production
+      - run: node_modules/.bin/gulp deploy
+
+workflows:
+  version: 2
+  github-pages:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master
