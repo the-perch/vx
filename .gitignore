@@ -14,5 +14,3 @@ publish/
 .publish/
 
 node_modules/
-
-sass/_icon-mixin.scss
