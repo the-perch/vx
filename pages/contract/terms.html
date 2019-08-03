@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+@@include('../templates/head.html')
+@@include('../templates/menu.html')
+<div class="main">
+    @@include('../templates/header.html')
+    <section class="contract_terms">
+        <div class="validity">
+            <h2>Строк дії договору</h2>
+        </div>
+        <div>
+            <h2></h2>
+            <table>
+                <tr>
+                    <td>ПІБ</td>
+                    <td>ДАТА НАРОДЖЕННЯ</td>
+                    <td>АДРЕСА ЗУЄСТРАЦІЇ</td>
+                    <td>АДРЕСА ЛИСТУВАННЯ</td>
+                </tr>
+                <tr>
+                    <td>Іваненко Оксана Ігорівна</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
 
-</body>
-</html>
+    </section>
+    @@include('../templates/footer.html')
+</div>
+@@include('../templates/close.html')
