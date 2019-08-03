@@ -24,7 +24,7 @@ jobs:
       - run: git config --global user.email "haos616@gmail.com"
       - run: git config --global user.name "Github pages"
       - run: node_modules/.bin/gulp production
-      - run: ls -la
+      - run: node_modules/.bin/gulp production
       - run: node_modules/.bin/gulp deploy
       - run: cd .publish && git status && ls -la
 
