@@ -121,6 +121,11 @@ gulp.task('sprite', function() {
     return merge(imgStream, cssStream);
 });
 
+gulp.task('img', function() {
+    return gulp.src(['./images/**/*'])
+        .pipe(gulp.dest('./assets/images/'));
+});
+
 // публікація на gh-pages
 gulp.task('deploy', function() {
     return gulp.src(['./public/**/*']).pipe(ghPages());
@@ -132,7 +137,7 @@ gulp.task('deploy', function() {
 // не розуміє попередній синтаксис,
 // fileinclude - для того щоб з маленьких шаблонів зібрати повну сторінку
 gulp.task('default', ['server', 'build']);
-gulp.task('build', ['sprite', 'sass', 'fileinclude']);
+gulp.task('build', ['sprite', 'sass', 'fileinclude', 'img']);
 
 // при виклику команди gulp production
 // будуть стиснуті всі ресурси в папку public
