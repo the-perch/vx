@@ -137,4 +137,4 @@ gulp.task('build', ['sprite', 'sass', 'fileinclude']);
 // при виклику команди gulp production
 // будуть стиснуті всі ресурси в папку public
 // після чого командою gulp deploy їх можна опублікувати на github
-gulp.task('production', ['build', 'minify:html', 'minify:css', 'minify:js', 'minify:img']);
+gulp.task('production', ['sprite', 'sass', 'fileinclude', 'minify:html', 'minify:css', 'minify:js', 'minify:img']);
