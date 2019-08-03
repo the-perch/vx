@@ -6,15 +6,46 @@
 </head>
 <body>
     <section class="container">
-        <section class="profile-contacts">
+        <section class="user-contacts">
             <div class="user-phone">
-                <div class="user-phone__mobile"></div>
-                <div class="user-phone__work"></div>
-                <div class="user-phone__contact"></div>
+            <h2>Телефон</h2>
+                <form>
+                    <div class="user-phone__mobile" >
+                        <img src="" class="user-phone__mobile--icon" alt="">
+                        <input type="tel" id="mobile-num" value="+380 (67) 123-45-67">
+                        <label for="mobile">Мобільний</label>
+                        <img src="" class="edit-icon" alt="">
+                    </div>
+                    <div class="user-phone__work">
+                        <img src="" class="user-phone__work--icon" alt="">
+                        <input type="tel" id="work-num" placeholder="380 (xx) xxx-xx-xx">
+                        <label for="work">Робочий</label>
+                        <img src="" class="edit-icon" alt="">
+                    </div>
+                    <div class="user-phone__contact">
+                        <img src="" class="user-phone__contact--icon" alt="">
+                        <input type="tel" id="contact-num" value="+380 (67) 123-45-67">
+                        <label for="contact">Контактний</label>
+                        <img src="" class="edit-icon" alt="">
+                    </div>
+                </form>
             </div>
             <div class="user-email">
-                <div class="user-email__main"></div>
-                <div class="user-email__additional"></div>
+            <h2>Email</h2>
+                <form>
+                    <div class="user-email__main">
+                        <img src="" class="user-email__main--icon" alt="">
+                        <input type="email" id="main-email" value="my.email75@gmail.com">
+                        <label for="main-email"></label>
+                        <img src="" class="checked-icon" alt="">
+                    </div>
+                    <div class="user-email__additional">
+                        <img src="" class="user-email__additional--icon" alt="">
+                        <input type="email" id="add-email" placeholder="xxxxxxxx@xxx.xxx">
+                        <label for="add-email">Додатковий e-mail</label>
+                        <img src="" class="edit-icon" alt="">
+                    </div>
+                </form>
             </div>
         </section>
     </section>
