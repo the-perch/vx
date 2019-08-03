@@ -1,0 +1,18 @@
+.contract_list_empty {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    
+
+    .contract_list_empty-p{
+        align-self: center;
+        color: rgb(158, 156, 156);
+        align-items: center;
+    }
+    .contract_list_empty-img{
+        width: 170px;
+        padding: 40px;
+        align-self: center;
+    }
+}
